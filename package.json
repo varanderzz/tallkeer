@@ -1,0 +1,46 @@
+{
+  "name": "tallkeer",
+  "productName": "Tallkeer",
+  "version": "0.2.1",
+  "description": "Ditado por voz em qualquer aplicativo do Windows, com formatação por IA.",
+  "main": "src/main/main.js",
+  "private": true,
+  "license": "MIT",
+  "author": "Gabriel",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test \"test/*.test.js\"",
+    "icon": "electron scripts/make-icon.js",
+    "dist": "electron scripts/make-icon.js && electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "app.ditado.desktop",
+    "productName": "Tallkeer",
+    "npmRebuild": false,
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/uiohook-napi/**",
+      "node_modules/koffi/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    }
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.137.0",
+    "koffi": "3.3.3",
+    "uiohook-napi": "1.5.5"
+  },
+  "devDependencies": {
+    "electron": "44.9.2",
+    "electron-builder": "26.15.3"
+  }
+}

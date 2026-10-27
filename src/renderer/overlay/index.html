@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self' blob:; style-src 'self'; font-src 'self'; media-src mediastream: blob:"
+    />
+    <title>Tallkeer</title>
+    <link rel="stylesheet" href="../fonts/fonts.css" />
+    <link rel="stylesheet" href="overlay.css" />
+  </head>
+  <body>
+    <div id="hud" class="hud hidden" role="status" aria-live="polite">
+      <span class="glyph" aria-hidden="true">
+        <span class="rec-dot"></span>
+        <span class="dots"><i></i><i></i><i></i></span>
+        <svg class="checkmark" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" /></svg>
+        <span class="alert-dot"></span>
+      </span>
+      <canvas id="wave" class="wave" aria-hidden="true"></canvas>
+      <span id="label" class="label"></span>
+      <span id="timer" class="timer"></span>
+      <span class="actions">
+        <button id="stop" class="btn stop" title="Parar e inserir" aria-label="Parar e inserir"></button>
+        <button id="cancel" class="btn cancel" title="Cancelar (Esc)" aria-label="Cancelar"></button>
+      </span>
+    </div>
+    <script src="overlay.js"></script>
+  </body>
+</html>

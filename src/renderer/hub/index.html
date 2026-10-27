@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:"
+    />
+    <title>Tallkeer</title>
+    <link rel="stylesheet" href="../fonts/fonts.css" />
+    <link rel="stylesheet" href="hub.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="wordmark">Tallkeer</div>
+          <div class="brand-sub">Voz em texto</div>
+        </div>
+        <nav id="nav" aria-label="Seções">
+          <span class="nav-indicator" aria-hidden="true"></span>
+          <button data-page="inicio"><span class="idx">01</span>Início</button>
+          <button data-page="historico"><span class="idx">02</span>Histórico</button>
+          <button data-page="dicionario"><span class="idx">03</span>Dicionário</button>
+          <button data-page="snippets"><span class="idx">04</span>Snippets</button>
+          <button data-page="estilos"><span class="idx">05</span>Estilos</button>
+          <button data-page="notas"><span class="idx">06</span>Notas</button>
+          <button data-page="configuracoes"><span class="idx">07</span>Configurações</button>
+        </nav>
+        <div class="sidebar-foot">
+          <div id="status" class="status-line"><span class="dot"></span><span class="status-text"></span></div>
+          <div class="hint"><span>Para falar, segure</span><span id="hotkey-hint" class="combo"></span></div>
+        </div>
+      </aside>
+      <main id="content" class="content" tabindex="-1">
+        <div id="page" class="page"></div>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="hub.js"></script>
+  </body>
+</html>

@@ -1,0 +1,291 @@
+/* Barra flutuante do Tallkeer: grafite quente, discreta sobre qualquer app. */
+
+:root {
+  --hud: rgba(22, 21, 19, 0.94);
+  --hud-line: rgba(255, 255, 255, 0.075);
+  --text: #edebe6;
+  --muted: #a6a39b;
+  --faint: #6f6c66;
+  --rec: #e4644f;
+  --warn: #d9a75b;
+  --ok: #a9c19f;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: 'Geist', 'Segoe UI Variable Text', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 22px;
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  max-width: 440px;
+  padding: 0 16px;
+  border: 1px solid var(--hud-line);
+  border-radius: 14px;
+  background: var(--hud);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.22),
+    0 2px 6px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 450;
+  letter-spacing: 0.005em;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.38s var(--ease),
+    transform 0.55s var(--ease);
+}
+
+.hud.hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transition-duration: 0.22s, 0.3s;
+}
+
+/* Ícone de estado: só um aparece por vez. */
+.glyph {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+}
+
+.glyph > * {
+  grid-area: 1 / 1;
+  display: none;
+}
+
+.rec-dot,
+.alert-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.rec-dot {
+  background: var(--rec);
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.recording .rec-dot {
+  display: block;
+}
+
+.recording.command .rec-dot {
+  background: var(--text);
+}
+
+.dots {
+  gap: 3px;
+}
+
+.processing .dots {
+  display: flex;
+}
+
+.dots i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text);
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.checkmark {
+  width: 14px;
+  height: 14px;
+}
+
+.checkmark path {
+  stroke: var(--ok);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16;
+  stroke-dashoffset: 16;
+}
+
+.done .checkmark {
+  display: block;
+}
+
+.done .checkmark path {
+  animation: draw 0.55s var(--ease) 0.05s forwards;
+}
+
+.warning .alert-dot,
+.error .alert-dot {
+  display: block;
+}
+
+.warning .alert-dot {
+  background: var(--warn);
+}
+.error .alert-dot {
+  background: var(--rec);
+}
+
+.wave {
+  display: none;
+  flex: none;
+  width: 116px;
+  height: 24px;
+}
+
+.recording .wave {
+  display: block;
+}
+
+.label {
+  overflow: hidden;
+  color: var(--muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.done .label,
+.warning .label,
+.error .label {
+  color: var(--text);
+}
+
+.timer {
+  display: none;
+  min-width: 30px;
+  color: var(--faint);
+  font-family: 'Geist Mono', Consolas, monospace;
+  font-size: 11px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.recording .timer {
+  display: block;
+}
+
+.actions {
+  display: none;
+  gap: 6px;
+  margin-right: -6px;
+}
+
+.recording.handsfree .actions {
+  display: flex;
+}
+
+.btn {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.stop::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 2px;
+  background: var(--rec);
+}
+
+.cancel::before,
+.cancel::after {
+  content: '';
+  position: absolute;
+  top: 12.5px;
+  left: 8px;
+  width: 10px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--muted);
+  transform: rotate(45deg);
+}
+
+.cancel::after {
+  transform: rotate(-45deg);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud,
+  .hud.hidden {
+    transition: none;
+  }
+  .rec-dot,
+  .dots i,
+  .done .checkmark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
